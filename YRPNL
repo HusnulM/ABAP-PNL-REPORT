@@ -1,0 +1,28 @@
+*&---------------------------------------------------------------------*
+*& Report YRPNL
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT yrpnl.
+TYPE-POOLS: slis.
+
+INCLUDE yrpnl_01.
+INCLUDE yrpnl_02.
+INCLUDE yrpnl_03.
+INCLUDE yrpnl_04.
+INCLUDE yrpnl_05. "Tree View
+
+START-OF-SELECTION.
+  PERFORM get_data.
+  IF dsp_1 = 'X'.
+    PERFORM set_fieldcat.
+    PERFORM display_alv.
+  ELSEIF dsp_2 = 'X'.
+    PERFORM tree_view.
+  ELSEIF dsp_3 = 'X'.
+    SUBMIT ybds_pl_report
+      WITH p_bukrs = p_bukrs
+      WITH p_perio = p_perio
+      WITH p_prctr = p_prctr
+      AND RETURN.
+  ENDIF.
